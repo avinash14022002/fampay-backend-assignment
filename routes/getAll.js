@@ -1,4 +1,4 @@
-const { getAllVideos } = require("../dao");
+const { getAllVideosFromDatabase } = require("../dao");
 
 const sanitizePage = (page) => {
   if (typeof page === "string") {
@@ -15,7 +15,7 @@ const sanitizePage = (page) => {
 
 const requestHandler = async (req, res) => {
   const page = sanitizePage(req.query.page);
-  const videos = await getAllVideos(page);
+  const videos = await getAllVideosFromDatabase(page);
   res.send(videos);
 };
 

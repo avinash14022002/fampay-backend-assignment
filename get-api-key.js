@@ -1,17 +1,30 @@
+// Varrible maintained for iterating over the API_KEYS list.
+let youtubeApiKeysIndex = 0;
 
-// FAMPAY INTERVIEW BONUS POINT 1 ##############
-// ROUND ROBIN WAY TO GET API KEYS
-const { API_KEY } = process.env;
+// Maintain a counter of hits used for switching the API keys.
+var apiHitCounter = 0;
 
-const YOUTUBE_API_KEYS = [
-  "AIzaSyCH5WqfoBAdMcQUvLC6rrS20fio5BhO3tU",
-  "AIzaSyAaMob35c9SiXvTn_ftEGhb3A2gNGaUZd4",
-  "AIzaSyAWyVCiEmzGARkkKZt6Pk-QPju3z5tDstk"
-]; // adding more API keys to this array, will increase our usage units, and increase our quota
+// Adding multiple APIs keys from different project will increae the quota of the access to the APIs.
+const API_KEYS = [
+  "AIzaSyBtuPSx6c4YaHuIyBaRTH372QtpSRfCLoU",
+  "AIzaSyBuOdq0zc6ZO2lejz4tuK5FUUqG9KSLb_U",
+  "AIzaSyDjDWVLTzqBiBetVtGFOJwB7mSnbyJ4dUo",
+];
 
-let idx = 0;
+//                                BONUS POINT 1                                    //
+// Add support for supplying multiple API keys so that if quota is exhausted on one,
+// it automatically uses the next available key.
 
 module.exports = () => {
-    idx = (idx + 1) % YOUTUBE_API_KEYS.length;
-    return YOUTUBE_API_KEYS[idx];
+  var pacificTimeReset = new Date().toLocaleString("en-US", {
+    timeZone: "America/Los_Angeles",
+  });
+  var pacificTime = new Date(pacificTimeReset);
+  if (pacificTime.getHours === 0 && pacificTime.getMinutes === 0) {
+    apiHitCounter = 0;
+  } else {
+    apiHitCounter++;
+  }
+  youtubeApiKeysIndex = Math.floor(apiHitCounter / 100);
+  return API_KEYS[youtubeApiKeysIndex];
 };

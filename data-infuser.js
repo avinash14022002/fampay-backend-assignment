@@ -1,13 +1,14 @@
 const axios = require("axios");
 const getAPIKey = require("./get-api-key");
-const { insertVideos, getMaxPublishedAt } = require("./dao");
+const { insertVideosToDatabase, getMaxPublishedAt } = require("./dao");
 
-const KEYWORD = "cooking";
+const KEYWORD = "bollywood";
 
-const getYoutubeJSON = async (url, params) => {
+// fetching the data from webpage
+const getYoutubeDataFromWebPage = async (url, params) => {
   try {
     const response = await axios.get(url, { params });
-    if(response.status === 200) {
+    if (response.status === 200) {
       return response.data;
     } else {
       throw new Error(
@@ -16,14 +17,15 @@ const getYoutubeJSON = async (url, params) => {
         }`
       );
     }
-  } catch(e) {
+  } catch (e) {
     console.log(`ERROR while hitting Youtube API`);
     console.log(e);
     return null;
   }
 };
 
-const storeData = async (json) => {
+// Storing the data fetched by API
+const storeDataInDatabase = async (json) => {
   const { items } = json;
   const videos = items.map((item) => {
     const { id, snippet } = item;
@@ -46,11 +48,14 @@ const storeData = async (json) => {
       publishedAt: new Date(publishedAt),
     };
   });
-  await insertVideos(videos); // insert video inside DB
+  
+  // Insert record in database
+  await insertVideosToDatabase(videos);
   console.log(`Inserted ${items.length} videos in DB`);
 };
 
-const dataInfuser = async () => {
+// Creating an API call for fetching up the data
+const dataFromYoutubeApi = async () => {
   const apiKey = getAPIKey();
   const url = `https://www.googleapis.com/youtube/v3/search`;
   const publishedAfter = await getMaxPublishedAt();
@@ -64,10 +69,11 @@ const dataInfuser = async () => {
     part: "snippet",
     publishedAfter,
   };
-  const json = await getYoutubeJSON(url, queryParams);
-  if(json !== null) {
-    await storeData(json);
+  
+  const response = await getYoutubeDataFromWebPage(url, queryParams);
+  if (response !== null) {
+    await storeDataInDatabase(response);
   }
 };
 
-module.exports = dataInfuser;
+module.exports = dataFromYoutubeApi;
