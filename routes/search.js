@@ -1,4 +1,4 @@
-const { searchVideos } = require("../dao");
+const { searchVideosInDatabase } = require("../dao");
 
 const sanitizeQueryString = (queryString) => {
   if (typeof queryString === "string") {
@@ -12,7 +12,7 @@ const sanitizeQueryString = (queryString) => {
 
 const requestHandler = async (req, res) => {
   const queryString = sanitizeQueryString(req.query.q);
-  const videos = await searchVideos(queryString);
+  const videos = await searchVideosInDatabase(queryString);
   res.send(videos);
 };
 
