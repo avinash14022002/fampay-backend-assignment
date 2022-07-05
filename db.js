@@ -29,3 +29,18 @@ connection.connect((err) => {
   }
   console.log("Successfully Connected to Database");
 });
+
+
+const selectMultiple = async (query, ...args) => {
+  const [rows] = await connection.promise().query(query, args);
+  return rows;
+};
+
+const insertQuery = async (query, ...args) => {
+  await connection.promise().query(query, args);
+};
+
+module.exports = {
+  selectMultiple,
+  insertQuery,
+};
