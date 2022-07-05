@@ -53,5 +53,6 @@ const searchVideos = async (queryString) => {
 module.exports = {
   getAllVideos,
   insertVideos,
-  getMaxPublishedAt
+  getMaxPublishedAt,
+  searchVideos,
 };

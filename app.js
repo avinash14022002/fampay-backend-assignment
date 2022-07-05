@@ -9,6 +9,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/getAll", require("./routes/getAll"));
+app.get("/search", require("./routes/search"));
 dataInfuser(); // call at start
 setInterval(dataInfuser, 10 * 1000); // then call every 10 seconds
 
