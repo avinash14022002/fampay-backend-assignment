@@ -27,5 +27,5 @@ app.get("/getAll", require("./routes/getAll"));
 app.get("/search", require("./routes/search"));
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Application is listening on port ${port}`);
 });

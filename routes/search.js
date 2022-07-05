@@ -1,4 +1,3 @@
-
 const { searchVideosInDatabase } = require("../dao");
 
 const sanitizeQueryString = (queryString) => {
