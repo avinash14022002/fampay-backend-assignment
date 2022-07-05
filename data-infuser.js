@@ -48,6 +48,7 @@ const storeDataInDatabase = async (json) => {
       publishedAt: new Date(publishedAt),
     };
   });
+  
   // Insert record in database
   await insertVideosToDatabase(videos);
   console.log(`Inserted ${items.length} videos in DB`);
@@ -68,6 +69,7 @@ const dataFromYoutubeApi = async () => {
     part: "snippet",
     publishedAfter,
   };
+  
   const response = await getYoutubeDataFromWebPage(url, queryParams);
   if (response !== null) {
     await storeDataInDatabase(response);
