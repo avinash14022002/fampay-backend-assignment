@@ -68,7 +68,7 @@ const dataFromYoutubeApi = async () => {
     part: "snippet",
     publishedAfter,
   };
-
+  
   const response = await getYoutubeDataFromWebPage(url, queryParams);
   if (response !== null) {
     await storeDataInDatabase(response);
