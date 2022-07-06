@@ -27,9 +27,7 @@ CREATE TABLE videos(
     KEY `fampay_videos_videoId` (`videoId`),
     KEY `fampay_videos_publishedAt` (`publishedAt`), # to get the max publishedAt while hitting YT API
     KEY `fampay_videos_isActive` (`isActive`),
-    ### FAMPAY INTERVIEW BONUS POINT 3 [Starts] ##############
     FULLTEXT(title, description) # to search by jumbled keywords
-    ### FAMPAY INTERVIEW BONUS POINT 3 [Ends] ##############
 );
 ```
 
@@ -47,11 +45,8 @@ This function is bound to run every 10 seconds, **and uses 3 API Keys**, which i
 ### Exposed End Points
 ### Get All Videos
 File: `/routes/getAll.js`
-
 URL: http://localhost:8888/getAll?page=2      (`page` param is optional)
 
 ### Search
 File: `/routes/search.js`
-`curl -X GET http://localhost:8888/search?q=major`
-
-`(Keywords search works in jumbled order as well)`
+URL: http://localhost:8888/search?q=major
