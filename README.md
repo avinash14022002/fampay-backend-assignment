@@ -25,7 +25,7 @@ CREATE TABLE videos(
     isActive TINYINT(1) NOT NULL DEFAULT 1,
     PRIMARY KEY(id),
     KEY `fampay_videos_videoId` (`videoId`),
-    KEY `fampay_videos_publishedAt` (`publishedAt`), # to get the max publishedAt while hitting YT API
+    KEY `fampay_videos_publishedAt` (`publishedAt`),
     KEY `fampay_videos_isActive` (`isActive`),
     FULLTEXT(title, description) # to search by jumbled keywords
 );
